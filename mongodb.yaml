@@ -9,5 +9,5 @@
 
   - name: install mongodb 
     ansible.builtin.dnf:
-    name: mongodb-org
-    state: present
+     name: mongodb-org
+     state: present
