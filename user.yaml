@@ -56,26 +56,3 @@
       name: user
       state: started
       enabled: yes
-
-  - name: copy mongodb repo
-    ansible.builtin.copy:
-      src: mongo.repo
-      dest: /etc/yum.repos.d/mongo.repo
-
-  - name: install mongodb client
-    ansible.builtin.dnf:
-      name: mongodb-mongosh
-      state: present
-
-  - name: check products loaded or not
-    ansible.builtin.command: mongosh --host mongodb.narendrablog.shop --eval 'db.getMongo().getDBNames().indexOf("user")'
-    register: user_output
-
-  - name: print user output
-    ansible.builtin.debug:
-      msg: "{{ user_output }}"
-
-  - name: load products
-    ansible.builtin.shell: mongosh --host mongodb.narendrablog.shop < /app/db/master-data.js
-    when: user_output.stdout | int < 0
-  
